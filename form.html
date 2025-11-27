@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторна 7 - Завдання 3</title>
+</head>
+<body>
+    <h2>Анкета (AJAX)</h2>
+    <form id="myForm" onsubmit="sendData(event)">
+        <label>Ім'я: <input type="text" name="username" required></label><br><br>
+        <label>Email: <input type="email" name="email" required></label><br><br>
+        <button type="submit">Відправити</button>
+    </form>
+
+    <div id="response" style="margin-top: 20px; color: blue;"></div>
+
+    <script>
+        function sendData(e) {
+            e.preventDefault(); // Зупиняємо стандартне перезавантаження сторінки
+
+            var formData = new FormData(document.getElementById("myForm"));
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Виводимо відповідь сервера
+                    document.getElementById("response").innerHTML = this.responseText;
+                }
+            };
+
+            [cite_start]// Виконуємо POST запит [cite: 8]
+            xhttp.open("POST", "save_survey.php", true);
+            xhttp.send(formData); [cite_start]// Відправляємо дані форми [cite: 11]
+        }
+    </script>
+</body>
+</html>

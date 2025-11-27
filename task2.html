@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторна 7 - Завдання 2</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        #joke-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            min-height: 50px;
+        }
+        button { padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Генератор жартів (AJAX)</h1>
+    <button onclick="loadJoke()">Отримати жарт</button>
+    <div id="joke-container">Натисніть кнопку, щоб завантажити жарт...</div>
+
+    <script>
+        function loadJoke() {
+            [cite_start]// Створення об'єкту XMLHttpRequest [cite: 9]
+            var xhttp = new XMLHttpRequest();
+            
+            [cite_start]// Налаштування обробника подій [cite: 10, 17]
+            xhttp.onreadystatechange = function() {
+                [cite_start]// Перевірка стану (4 = Done, 200 = OK) [cite: 19]
+                if (this.readyState == 4 && this.status == 200) {
+                    // Отримуємо текст з файлу
+                    var text = this.responseText;
+                    
+                    // Розбиваємо текст на окремі жарти по розділювачу ***
+                    var jokes = text.split('***');
+                    
+                    // Вибираємо випадковий жарт
+                    var randomIndex = Math.floor(Math.random() * jokes.length);
+                    var randomJoke = jokes[randomIndex].trim();
+                    
+                    [cite_start]// Виводимо на сторінку [cite: 22]
+                    document.getElementById("joke-container").innerText = randomJoke;
+                }
+            };
+            
+            [cite_start]// Відкриття з'єднання та відправка запиту [cite: 10, 23, 24]
+            xhttp.open("GET", "jokes.txt", true);
+            xhttp.send();
+        }
+    </script>
+</body>
+</html>
